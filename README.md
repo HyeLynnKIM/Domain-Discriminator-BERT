@@ -14,5 +14,8 @@
 ├── myelynn_main.py
 ├── integrated_main.py
 ├── get_dataset.py
-└── run.sh
+└── vocab_bigbird.txt
 ``` 
+
+## 실험환경
+batch_size = 4, 
