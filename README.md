@@ -53,4 +53,4 @@ Discriminator
 |Office|81.66|71.79|
 |Spec|86.10|78.33|
 |Law|73.91|38.66|
-|Hub 행정 (*Unknown Data_Not Trained*)|88.64|82.54| 
+|<span style='background-color:#fff5b1'>Hub 행정 (*Unknown Data_Not Trained*)</span>|88.64|82.54| 
