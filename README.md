@@ -48,7 +48,7 @@ Discriminator
 |Dataset|F1|EM|
 |----|----|----|
 |KorQuAD 2.0|86.37|80.65|
-|KorWIKI|||
+|KorWIKI|93.66|89.11|
 |Office|81.66|71.79|
 |Spec|86.10|78.33|
 |Law|73.91|38.66|
