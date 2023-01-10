@@ -21,6 +21,7 @@
 Model : KoBigBird Model
 
 |Dataset|trained Data|Test Data|
+|----|-----|------|
 |KorQuAD 2.0|12655||
 |KorWIKI|10000||
 |Office|6826|1397|
