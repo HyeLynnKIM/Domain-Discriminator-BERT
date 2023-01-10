@@ -81,7 +81,7 @@ class intergrated_model:
 
     def get_adv_output_(self, bert_config, input_tensor, domain_label, dis_lambda, global_step):
         """Get loss and log probs for the masked LM."""
-        domain_num = 4
+        domain_num = 5
         with tf.variable_scope("cls/domain_classification"):
             dis_lambda = dis_lambda * kl_coef(global_step)
             output_weights = tf.get_variable(
@@ -95,16 +95,17 @@ class intergrated_model:
             logits = tf.nn.bias_add(logits, output_bias)
             log_probs = tf.nn.softmax(logits, axis=-1)
             domain_label = tf.ones_like(domain_label, dtype=tf.float32)
+            domain_label = tf.reshape(domain_label, shape=[-1, domain_num])
 
             per_example_loss = kl(log_probs, tf.ones_like(log_probs, dtype=tf.float32))
-            loss = per_example_loss * tf.cast(dis_lambda, dtype=tf.float32) # why..
+            loss = per_example_loss * tf.cast(dis_lambda, dtype=tf.float32)
             loss = tf.reduce_mean(loss)
 
         return loss, per_example_loss, log_probs
 
     def get_get_discrimination_output_(self, bert_config, input_tensor, domain_label, dis_lambda, global_step):
         """Get loss and log probs for the masked LM."""
-        domain_num = 4
+        domain_num = 5
         with tf.variable_scope("cls/domain_classification", reuse=True):
             dis_lambda = dis_lambda * kl_coef(global_step)
             output_weights = tf.get_variable(
@@ -190,10 +191,10 @@ class intergrated_model:
             output_vars.extend(bert_vars)
             disc_vars = get_variables_with_name('cls/domain_classification')
 
-            optimizer_qa = optimization.create_optimizer(loss=loss_first, init_lr=learning_rate, num_train_steps=125000,
+            optimizer_qa = optimization.create_optimizer(loss=loss_first, init_lr=3e-5, num_train_steps=125000,
                                                          num_warmup_steps=5000, use_tpu=False, var_list=output_vars,
                                                          global_step=global_step_)
-            optimizer_disc = optimization.create_optimizer(loss=loss_second, init_lr=learning_rate, num_train_steps=125000,
+            optimizer_disc = optimization.create_optimizer(loss=loss_second, init_lr=3e-5, num_train_steps=125000,
                                                            num_warmup_steps=5000, use_tpu=False, var_list=disc_vars,
                                                            global_step=global_step2)
             sess.run(tf.initialize_all_variables())
@@ -211,7 +212,7 @@ class intergrated_model:
             for i in range(training_epoch):
                 # 라벨 정보 바뀌어야함
                 input_ids, input_masks, input_segments, input_rows, input_cols, start_label, stop_label, domain_label \
-                    = self.processor.next_batch_all_adv()
+                    = self.processor.next_batch_all_adv2()
 
                 feed_dict = {self.QA.input_ids: input_ids,
                              self.QA.input_segments: input_segments,
@@ -222,12 +223,27 @@ class intergrated_model:
                              self.QA.domain_label: domain_label
                              }
 
+                # try:
                 g1, loss_qa_, _ = sess.run([global_step, loss_first, optimizer_qa], feed_dict=feed_dict)
                 g2, loss_disc_, _ = sess.run([global_step, loss_second, optimizer_disc], feed_dict=feed_dict)
+                # except:
+                #     g1 = 0
+                #     g2 = 0
+                #     loss_qa_ = 0
+                #     loss_disc_ = 0
 
+                # print(pred[0, 0:10])
+                # print(pred2[0, 0:10])
+                # print(column_label[0, 0:10])
                 print(g1, i)
                 print(g2, loss_qa_, loss_disc_)
 
+                # print('-------')
+
+                # if i % 1000 == 0 and i > 100:
+                #     print('saved!')
+                #     saver = tf.train.Saver()
+                #     saver.save(sess, self.save_path)
                 if i % 10000 == 0 and i != 0:
                     print('saved!')
                     saver = tf.train.Saver()
@@ -236,7 +252,7 @@ class intergrated_model:
     def eval_with_span_test(self):
         dataholder = DataHolder.DataHolder()
 
-        vocab = tokenization.load_vocab(vocab_file='vocab.txt')
+        vocab = tokenization.load_vocab(vocab_file='vocab_bigbird.txt')
         tokenizer = tokenization.WordpieceTokenizer(vocab=vocab)
         config = tf.ConfigProto()
         config.gpu_options.allow_growth = True
@@ -286,11 +302,14 @@ class intergrated_model:
             saver = tf.train.Saver()
             saver.restore(sess, self.save_path)
 
-            for _ in range(dataholder.input_ids3.shape[0]):
-                input_ids, input_segments, input_rows, input_cols, answer_text = dataholder.test_batch_spec()
+            # 1. Law test
+            for _ in range(300):
+                input_ids, input_segments, input_rows, input_cols, answer_text = dataholder.test_batch_law()
 
                 feed_dict = {self.QA.input_ids: input_ids, self.QA.input_segments: input_segments,
-                             self.QA.input_rows: input_rows, self.QA.input_cols: input_cols}
+                             self.QA.input_rows: input_rows, self.QA.input_cols: input_cols,
+
+                             }
 
                 question_end = 0
 
@@ -444,7 +463,7 @@ class intergrated_model:
                         print('EM:', em_total / epo)
                         print('F1:', f1_total / epo)
 
-# os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 int_model = intergrated_model(True)
-int_model.Training(False, 130001)
+int_model.Training(False, 111000)
 # int_model.eval_with_span_test()
