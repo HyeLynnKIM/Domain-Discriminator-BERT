@@ -21,6 +21,9 @@
 Pretrained KoBigBird Model을 KorQuAD 2.0, Korwiki, office, spec, law 네 가지 도메인으로 Fine-Tuning함
 이후 각 도메인으로 교차평가 진행 및 Unknown Domain인 Hub 행정 dev dataset으로 평가함
 
+## 실험 모델 구조
+![discriminator](https://user-images.githubusercontent.com/64192139/212037171-e5b06a63-3f28-4192-a458-24fb77b5e249.png)
+
 ## 데이터셋
 |Dataset|trained Data|Test Data|
 |----|-----|------|
@@ -39,7 +42,7 @@ No Discriminator - Base
 |Dataset|F1|EM|
 |----|----|----|
 |KorQuAD 2.0|86.55|78.73|
-|KorWIKI|-|-|
+|KorWIKI|93.54|88.96|
 |Office|78.00|65.46|
 |Spec|41.32|32.50|
 |Law|63.57|48.92|
