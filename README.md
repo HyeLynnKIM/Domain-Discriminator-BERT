@@ -41,12 +41,12 @@ batch_size = 4, epoch = 데이터별 2 ~ 11 epoch, learning_rate = 3e-5
 No Discriminator - Base
 |Dataset|F1|EM|
 |----|----|----|
-|KorQuAD 2.0|86.55|78.73|
+|KorQuAD 2.0|85.17|79.23|
 |KorWIKI|93.54|88.96|
-|Office|78.00|65.46|
-|Spec|41.32|32.50|
-|Law|63.57|48.92|
-|Hub 행정|-|-|
+|Office|82.07|72.29|
+|Spec|76.52|63.33|
+|Law|74.15|38.33|
+|Hub 행정|89.17|83.69|
 
 Discriminator
 |Dataset|F1|EM|
@@ -55,5 +55,5 @@ Discriminator
 |KorWIKI|93.66|89.11|
 |Office|81.66|71.79|
 |Spec|86.10|78.33|
-|Law|73.91|38.66|
-|<span style='background-color:#fff5b1'>Hub 행정 (*Unknown Data_Not Trained*)</span>|88.64|82.54| 
+|Law|74.12|38.66|
+|Hub 행정 (*Unknown Data_Not Trained*)</span>|88.95|82.96| 
