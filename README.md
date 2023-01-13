@@ -43,17 +43,20 @@ No Discriminator - Base
 |----|----|----|
 |KorQuAD 2.0|85.17|79.23|
 |KorWIKI|93.54|88.96|
-|Office|82.07|72.29|
+|Office|80.02|68.66|
 |Spec|76.52|63.33|
 |Law|74.15|38.33|
-|Hub 행정|89.17|83.69|
+|Hub 행정 (*Unknown Data_Not Trained*)|88.51|82.37|
 
 Discriminator
 |Dataset|F1|EM|
 |----|----|----|
 |KorQuAD 2.0|86.37|80.65|
 |KorWIKI|93.66|89.11|
-|Office|81.66|71.79|
-|Spec|86.10|78.33|
+|Office|80.70|70.65|
+|Spec|83.02|74.33|
 |Law|74.12|38.66|
-|Hub 행정 (*Unknown Data_Not Trained*)</span>|88.95|82.96| 
+|Hub 행정 (*Unknown Data_Not Trained*)|89.05|82.86| 
+
+## 추가 실험 예정
+도메인별 특화 모델과 비교하기
