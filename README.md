@@ -35,7 +35,7 @@ Pretrained KoBigBird Model을 KorQuAD 2.0, Korwiki, office, spec, law 네 가지
 |Hub 행정|-|6979|
 
 ## 실험환경
-batch_size = 4, epoch = 데이터별 7, 8.8, 13, 44.1, 57.5 epoch, learning_rate = 3e-5
+batch_size = 4, epoch = 데이터별 7->3, 8.8, 13, 44.1, 57.5 epoch, learning_rate = 3e-5
 
 ## 실험결과
 No Discriminator - Base
