@@ -66,24 +66,34 @@ vs Discriminator를 구현한 모델을 동일한 데이터 양으로 학습해 
 ### 실험환경
 batch_size = 4, epoch = 3 or 4 epoch, learning_rate = 3e-5
 
+### 데이터셋
+|Dataset|trained Data|Test Data|
+|----|-----|------|
+|KorQuAD 2.0|11852|1618|
+|KorWIKI|10306|11214|
+|Office|6184|1397|
+|Spec|1546|768|
+|Law|1546|300|
+|Hub 행정|-|6979|
+
 ### 실험결과
 단일 도메인 Base (A Domain model -> A Domain model)
 |Dataset|F1|EM|
 |----|----|----|
-|KorQuAD 2.0|85.17|79.23|
-|KorWIKI|93.54|88.96|
-|Office|80.02|68.66|
-|Spec|76.52|63.33|
+|KorQuAD 2.0|84.14|77.44|
+|KorWIKI|92.67|88.22|
+|Office|79.83|69.21|
+|Spec|60.21|37.36|
 |Law|66.67|31.33|
 |Hub 행정|89.49|84.06|
 
 Discriminator (A, B, C Domain model -> A Domain model)
 |Dataset|F1|EM|
 |----|----|----|
-|KorQuAD 2.0|86.37|80.65|
-|KorWIKI|93.66|89.11|
-|Office|80.70|70.65|
-|Spec|83.02|74.33|
-|Law|74.12|38.66|
-|Hub 행정 (*Unknown Data_Not Trained*)|89.05|82.86| 
+|KorQuAD 2.0|85.72|79.66|
+|KorWIKI|93.49|88.77|
+|Office|80.54|70.93|
+|Spec|77.37|62.76|
+|Law|70.71|37.33|
+|Hub 행정 (*Unknown Data_Not Trained*)|88.63|82.53| 
 
